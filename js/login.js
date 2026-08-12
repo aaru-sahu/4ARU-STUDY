@@ -1,25 +1,15 @@
 (function () {
-  const cfg = window.SUPABASE_CONFIG;
-  const adminEmail = '4k4sh07@gmail.com';
-  const form = document.getElementById('admin-login-form');
-  const email = document.getElementById('email');
-  const password = document.getElementById('password');
-  const button = document.getElementById('login-button');
-  const status = document.getElementById('status');
+  const cfg = window.SUPABASE_CONFIG, adminEmail = '4k4sh07@gmail.com';
+  const form = document.getElementById('admin-login-form'), resetForm = document.getElementById('password-reset-form');
+  const email = document.getElementById('email'), password = document.getElementById('password'), status = document.getElementById('status');
+  const button = document.getElementById('login-button'), forgot = document.getElementById('forgot-password');
   function show(message, error) { status.textContent = message; status.classList.toggle('error', Boolean(error)); }
-  function busy(value) { button.disabled = value; button.textContent = value ? 'Signing in…' : 'Secure admin login'; }
-  form.addEventListener('submit', async function (event) {
-    event.preventDefault();
-    if (!cfg || !cfg.url || !cfg.anonKey) { show('Supabase configuration missing.', true); return; }
-    if (email.value.trim().toLowerCase() !== adminEmail) { show('This email is not authorised for the admin portal.', true); return; }
-    busy(true); show('Signing in securely…');
-    try {
-      const response = await fetch(cfg.url + '/auth/v1/token?grant_type=password', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey }, body: JSON.stringify({ email: email.value.trim().toLowerCase(), password: password.value }) });
-      const data = await response.json().catch(function () { return {}; });
-      if (!response.ok) throw new Error(data.error_description || data.msg || 'Incorrect email or password.');
-      localStorage.setItem('sb-access-token', data.access_token);
-      localStorage.setItem('sb-refresh-token', data.refresh_token || '');
-      window.location.assign('cgpsc-admin.html');
-    } catch (error) { show(error.message, true); } finally { busy(false); }
-  });
+  function setSession(token, refresh) { localStorage.setItem('sb-access-token', token); localStorage.setItem('sb-refresh-token', refresh || ''); }
+  function tokenFromUrl() { const hash = new URLSearchParams(location.hash.slice(1)); return { access: hash.get('access_token'), refresh: hash.get('refresh_token'), type: hash.get('type') }; }
+  async function api(path, body, bearer, method) { const response = await fetch(cfg.url + path, { method: method || 'POST', headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, ...(bearer ? { Authorization: 'Bearer ' + bearer } : {}) }, body: JSON.stringify(body) }); const data = await response.json().catch(function () { return {}; }); if (!response.ok) throw new Error(data.error_description || data.msg || data.message || 'Request failed.'); return data; }
+  function showRecovery() { const session = tokenFromUrl(); if (!session.access || session.type !== 'recovery') return; setSession(session.access, session.refresh); history.replaceState({}, document.title, location.pathname); form.classList.add('hidden'); forgot.classList.add('hidden'); resetForm.classList.remove('hidden'); document.getElementById('login-title').textContent = 'Set admin password'; document.getElementById('login-intro').textContent = 'Choose a new password for your private admin dashboard.'; show('Create a strong password with at least 8 characters.'); }
+  form.addEventListener('submit', async function (event) { event.preventDefault(); if (email.value.trim().toLowerCase() !== adminEmail) { show('This email is not authorised for the admin portal.', true); return; } button.disabled = true; button.textContent = 'Signing in…'; try { const data = await api('/auth/v1/token?grant_type=password', { email: adminEmail, password: password.value }); setSession(data.access_token, data.refresh_token); location.assign('cgpsc-admin.html'); } catch (error) { show(error.message, true); } finally { button.disabled = false; button.textContent = 'Secure admin login'; } });
+  forgot.addEventListener('click', async function () { forgot.disabled = true; show('Password setup email भेजा जा रहा है…'); try { await api('/auth/v1/recover', { email: adminEmail, redirect_to: location.origin + location.pathname }); show('Password setup email भेज दिया गया। Inbox में latest link खोलो और नया password set करो।'); } catch (error) { const text = error.message || ''; show(/rate limit/i.test(text) ? 'Email limit reached. Please wait up to 1 hour, then click this only once.' : text, true); } finally { forgot.disabled = false; } });
+  resetForm.addEventListener('submit', async function (event) { event.preventDefault(); const next = document.getElementById('new-password').value, confirm = document.getElementById('confirm-password').value, session = tokenFromUrl(); if (next !== confirm) { show('Passwords do not match.', true); return; } if (next.length < 8) { show('Password must be at least 8 characters.', true); return; } try { await api('/auth/v1/user', { password: next }, session.access || localStorage.getItem('sb-access-token'), 'PUT'); show('Password saved. Opening dashboard…'); setTimeout(function () { location.assign('cgpsc-admin.html'); }, 500); } catch (error) { show(error.message, true); } });
+  showRecovery();
 })();
