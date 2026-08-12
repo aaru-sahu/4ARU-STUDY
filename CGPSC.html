@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CGPSC Preparation | 4ARU Resources</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#020b08;
+    color:#f4fff7;
+    line-height:1.6;
+}
+
+:root{
+    --green:#9cff45;
+    --green2:#42e695;
+    --dark:#020b08;
+    --card:#071914;
+    --card2:#0a2118;
+    --border:rgba(156,255,69,.22);
+    --muted:#a8b9b0;
+}
+
+.container{
+    width:92%;
+    max-width:1400px;
+    margin:auto;
+}
+
+/* NAVBAR */
+
+.navbar{
+    height:74px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 3%;
+    background:rgba(2,11,8,.94);
+    border-bottom:1px solid rgba(156,255,69,.12);
+    position:sticky;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(16px);
+}
+
+.logo{
+    font-size:29px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:var(--green);
+    line-height:.8;
+}
+
+.logo span{
+    display:block;
+    font-size:9px;
+    letter-spacing:5px;
+    color:#fff;
+    text-align:center;
+    margin-top:7px;
+}
+
+.nav-links{
+    display:flex;
+    gap:27px;
+    align-items:center;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#e8eee9;
+    font-size:14px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--green);
+}
+
+.back-btn{
+    padding:9px 17px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    color:var(--green)!important;
+}
+
+/* HERO */
+
+.hero{
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 80% 40%,rgba(72,255,80,.14),transparent 32%),
+        radial-gradient(circle at 20% 50%,rgba(50,255,130,.07),transparent 30%);
+    border-bottom:1px solid rgba(156,255,69,.08);
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    right:-180px;
+    top:-200px;
+    border-radius:50%;
+    background:rgba(156,255,69,.06);
+    filter:blur(90px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:850px;
+}
+
+.badge{
+    display:inline-block;
+    border:1px solid rgba(156,255,69,.45);
+    background:rgba(156,255,69,.05);
+    color:var(--green);
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.08;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:var(--green);
+}
+
+.hero p{
+    color:#b5c4bc;
+    font-size:17px;
+    max-width:760px;
+    margin-bottom:28px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:13px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    display:inline-block;
+    font-weight:600;
+    font-size:14px;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:var(--green);
+    color:#061009;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(156,255,69,.2);
+}
+
+.btn-secondary{
+    border:1px solid var(--border);
+    color:var(--green);
+    background:rgba(156,255,69,.03);
+}
+
+.btn-secondary:hover{
+    background:rgba(156,255,69,.1);
+}
+
+/* QUICK STATS */
+
+.quick-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:-35px;
+    position:relative;
+    z-index:5;
+}
+
+.quick-card{
+    background:linear-gradient(145deg,#0a2017,#06130e);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.quick-card h3{
+    color:var(--green);
+    font-size:25px;
+}
+
+.quick-card p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* SECTIONS */
+
+section.content{
+    padding:70px 0 10px;
+}
+
+.section-head{
+    margin-bottom:28px;
+}
+
+.section-head .tag{
+    color:var(--green);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    margin-bottom:6px;
+}
+
+.section-head h2{
+    font-size:32px;
+}
+
+.section-head p{
+    color:var(--muted);
+    max-width:800px;
+    margin-top:7px;
+}
+
+/* ABOUT */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:25px;
+}
+
+.panel{
+    background:linear-gradient(145deg,#081b14,#04100c);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px;
+}
+
+.panel h3{
+    color:var(--green);
+    margin-bottom:12px;
+}
+
+.panel p{
+    color:#b4c1ba;
+    margin-bottom:12px;
+}
+
+.highlight{
+    border-left:3px solid var(--green);
+    padding-left:15px;
+    margin-top:18px;
+}
+
+/* WHY */
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.why-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px;
+    transition:.3s;
+}
+
+.why-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(156,255,69,.5);
+}
+
+.icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(156,255,69,.08);
+    color:var(--green);
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.why-card h3{
+    margin-bottom:8px;
+}
+
+.why-card p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* EXAM STAGES */
+
+.stage-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.stage{
+    padding:27px;
+    border-radius:17px;
+    border:1px solid var(--border);
+    background:linear-gradient(145deg,#0a2118,#05120d);
+    position:relative;
+    overflow:hidden;
+}
+
+.stage-number{
+    font-size:48px;
+    font-weight:900;
+    color:rgba(156,255,69,.12);
+    position:absolute;
+    right:18px;
+    top:3px;
+}
+
+.stage h3{
+    color:var(--green);
+    margin-bottom:8px;
+}
+
+.stage p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.stage ul{
+    margin-top:14px;
+    padding-left:18px;
+    color:#b7c5bd;
+    font-size:13px;
+}
+
+.stage li{
+    margin:6px 0;
+}
+
+/* SYLLABUS */
+
+.syllabus-tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.tab{
+    background:#071710;
+    border:1px solid var(--border);
+    color:#b8c7be;
+    padding:10px 18px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:var(--green);
+    color:#061009;
+    font-weight:bold;
+}
+
+.tab-content{
+    display:none;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+.syllabus-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.subject{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:23px;
+}
+
+.subject h3{
+    color:var(--green);
+    margin-bottom:10px;
+}
+
+.subject ul{
+    padding-left:19px;
+    color:#b7c5bd;
+    font-size:14px;
+}
+
+.subject li{
+    margin:6px 0;
+}
+
+/* PAPER CARDS */
+
+.paper-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.paper{
+    border:1px solid var(--border);
+    background:#071710;
+    border-radius:15px;
+    padding:23px;
+}
+
+.paper-title{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.paper-title h3{
+    color:#fff;
+}
+
+.marks{
+    color:var(--green);
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.paper p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.paper ul{
+    margin-top:10px;
+    padding-left:18px;
+    color:#b7c5bd;
+    font-size:13px;
+}
+
+/* TIPS */
+
+.tips-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.tip{
+    padding:22px;
+    background:linear-gradient(145deg,#081c14,#04100c);
+    border:1px solid var(--border);
+    border-radius:15px;
+}
+
+.tip strong{
+    color:var(--green);
+}
+
+.tip p{
+    color:#b7c5bd;
+    font-size:14px;
+    margin-top:6px;
+}
+
+/* ROADMAP */
+
+.roadmap{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.road{
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:22px;
+    background:#071710;
+}
+
+.road span{
+    color:var(--green);
+    font-size:12px;
+    font-weight:bold;
+}
+
+.road h3{
+    margin:8px 0;
+}
+
+.road p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* RESOURCES */
+
+.resource-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.resource{
+    padding:22px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:#071710;
+    text-decoration:none;
+    color:white;
+    transition:.3s;
+}
+
+.resource:hover{
+    transform:translateY(-5px);
+    border-color:rgba(156,255,69,.5);
+}
+
+.resource h3{
+    color:var(--green);
+    margin-bottom:6px;
+}
+
+.resource p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* FAQ */
+
+.faq{
+    max-width:950px;
+}
+
+.faq-item{
+    border:1px solid var(--border);
+    background:#071710;
+    border-radius:12px;
+    margin-bottom:10px;
+    overflow:hidden;
+}
+
+.faq-question{
+    width:100%;
+    padding:17px 20px;
+    background:none;
+    border:0;
+    color:#fff;
+    text-align:left;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    font-size:15px;
+}
+
+.faq-answer{
+    display:none;
+    padding:0 20px 18px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.faq-item.open .faq-answer{
+    display:block;
+}
+
+/* CTA */
+
+.cta{
+    margin:70px auto;
+    padding:40px;
+    border:1px solid rgba(156,255,69,.35);
+    border-radius:20px;
+    background:
+        radial-gradient(circle at 20% 50%,rgba(156,255,69,.12),transparent 35%),
+        linear-gradient(90deg,#09281a,#0b341e);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+
+.cta h2{
+    font-size:28px;
+}
+
+.cta h2 span{
+    color:var(--green);
+}
+
+.cta p{
+    color:#aebdb5;
+    margin-top:7px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:30px;
+    text-align:center;
+    color:#73827b;
+    font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .quick-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .about-grid,
+    .syllabus-grid,
+    .paper-grid,
+    .tips-grid{
+        grid-template-columns:1fr;
+    }
+
+    .why-grid,
+    .stage-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .roadmap{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .resource-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .cta{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:0 5%;
+    }
+
+    .logo{
+        font-size:24px;
+    }
+
+    .hero{
+        min-height:520px;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .quick-stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .why-grid,
+    .stage-grid,
+    .roadmap,
+    .resource-grid{
+        grid-template-columns:1fr;
+    }
+
+    section.content{
+        padding-top:55px;
+    }
+
+    .section-head h2{
+        font-size:26px;
+    }
+
+    .cta{
+        padding:27px;
+    }
+
+    .cta h2{
+        font-size:22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+    <div class="logo">
+        4ARU
+        <span>RESOURCES</span>
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="#about">About CGPSC</a>
+
+        <a href="#exam">Exam Pattern</a>
+
+        <a href="#syllabus">Syllabus</a>
+
+        <a href="#strategy">Preparation</a>
+
+        <a href="#tips">Tips</a>
+
+    </nav>
+
+    <a class="back-btn" href="index.html">
+        ← Home
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="hero-content">
+
+<div class="badge">
+    CGPSC STATE SERVICE EXAMINATION
+</div>
+
+<h1>
+    Prepare for <span>CGPSC</span><br>
+    with the Right Resources.
+</h1>
+
+<p>
+    A complete preparation hub for the Chhattisgarh Public Service Commission
+    State Service Examination — understand the exam, follow the syllabus,
+    build your strategy and prepare systematically.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#syllabus" class="btn btn-primary">
+    Explore Syllabus →
+</a>
+
+<a href="#strategy" class="btn btn-secondary">
+    Preparation Strategy
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- QUICK STATS -->
+
+<div class="container">
+
+<div class="quick-stats">
+
+<div class="quick-card">
+<h3>2</h3>
+<p>Prelims Papers</p>
+</div>
+
+<div class="quick-card">
+<h3>7</h3>
+<p>Mains Papers</p>
+</div>
+
+<div class="quick-card">
+<h3>3</h3>
+<p>Major Selection Stages</p>
+</div>
+
+<div class="quick-card">
+<h3>CG</h3>
+<p>State-Specific Focus</p>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WHAT IS CGPSC -->
+
+<section class="content" id="about">
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">Know the Examination</div>
+
+<h2>CGPSC क्या है?</h2>
+
+<p>
+CGPSC यानी Chhattisgarh Public Service Commission, छत्तीसगढ़ राज्य की
+सरकारी सेवाओं में विभिन्न पदों के लिए भर्ती प्रक्रिया आयोजित करने वाला
+लोक सेवा आयोग है।
+</p>
+
+</div>
+
+<div class="about-grid">
+
+<div class="panel">
+
+<h3>CGPSC State Service Examination</h3>
+
+<p>
+State Service Examination के माध्यम से राज्य प्रशासन से जुड़े विभिन्न
+पदों के लिए योग्य उम्मीदवारों का चयन किया जाता है।
+</p>
+
+<p>
+यह परीक्षा केवल facts याद करने की परीक्षा नहीं है। इसमें सामान्य अध्ययन,
+छत्तीसगढ़ से संबंधित ज्ञान, aptitude, analytical ability, writing ability
+और personality जैसे अलग-अलग क्षेत्रों की तैयारी महत्वपूर्ण होती है।
+</p>
+
+<div class="highlight">
+
+<strong>Important:</strong>
+
+<p>
+हर वर्ष की भर्ती का exact number of vacancies, dates, eligibility,
+pattern या अन्य conditions notification के अनुसार बदल सकती हैं।
+इसलिए अंतिम निर्णय के लिए नवीनतम official notification जरूर देखें।
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h3>क्यों करें CGPSC की तैयारी?</h3>
+
+<p>• छत्तीसगढ़ राज्य की प्रशासनिक सेवाओं में career opportunity</p>
+
+<p>• State-focused General Studies की मजबूत तैयारी</p>
+
+<p>• प्रशासन, समाज और राज्य के विकास से जुड़े विषयों की समझ</p>
+
+<p>• कई विषयों की integrated preparation का अवसर</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHY CGPSC -->
+
+<section class="content">
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">Why This Exam</div>
+
+<h2>CGPSC की तैयारी में क्या महत्वपूर्ण है?</h2>
+
+</div>
+
+<div class="why-grid">
+
+<div class="why-card">
+
+<div class="icon">📚</div>
+
+<h3>Strong Foundation</h3>
+
+<p>
+History, Geography, Polity, Economy, Science और Environment जैसे
+core subjects को conceptually समझना जरूरी है।
+</p>
+
+</div>
+
+<div class="why-card">
+
+<div class="icon">🏛</div>
+
+<h3>Chhattisgarh Focus</h3>
+
+<p>
+छत्तीसगढ़ की history, geography, economy, culture, tribes,
+administration और current affairs को अलग priority दें।
+</p>
+
+</div>
+
+<div class="why-card">
+
+<div class="icon">✍</div>
+
+<h3>Answer Writing</h3>
+
+<p>
+Mains के लिए केवल पढ़ना काफी नहीं है। Structured और relevant
+answers लिखने का अभ्यास जरूरी है।
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- EXAM STRUCTURE -->
+
+<section class="content" id="exam">
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">Exam Structure</div>
+
+<h2>CGPSC Selection Process</h2>
+
+<p>
+State Service Examination की तैयारी को तीन बड़े stages में समझें।
+</p>
+
+</div>
+
+<div class="stage-grid">
+
+<div class="stage">
+
+<div class="stage-number">01</div>
+
+<h3>Preliminary Examination</h3>
+
+<p>
+यह screening stage है जिसमें objective-type papers होते हैं।
+</p>
+
+<ul>
+<li>General Studies</li>
+<li>Aptitude Test</li>
+<li>Chhattisgarh General Knowledge</li>
+<li>Current Affairs</li>
+</ul>
+
+</div>
+
+
+<div class="stage">
+
+<div class="stage-number">02</div>
+
+<h3>Main Examination</h3>
+
+<p>
+Descriptive examination जिसमें language, essay और General Studies
+के papers शामिल होते हैं।
+</p>
+
+<ul>
+<li>Language Paper</li>
+<li>Essay</li>
+<li>GS Papers I–V</li>
+<li>Answer Writing</li>
+</ul>
+
+</div>
+
+
+<div class="stage">
+
+<div class="stage-number">03</div>
+
+<h3>Interview</h3>
+
+<p>
+Final stage में personality, awareness, communication और
+administrative suitability जैसे aspects देखे जाते हैं।
+</p>
+
+<ul>
+<li>Personality</li>
+<li>Communication</li>
+<li>Current Affairs</li>
+<li>Administrative Awareness</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SYLLABUS -->
+
+<section class="content" id="syllabus">
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">Complete Syllabus</div>
+
+<h2>CGPSC Syllabus</h2>
+
+<p>
+नीचे syllabus को preparation-friendly sections में व्यवस्थित किया गया है।
+</p>
+
+</div>
+
+
+<div class="syllabus-tabs">
+
+<button class="tab active" onclick="showTab('prelims')">
+    Prelims
+</button>
+
+<button class="tab" onclick="showTab('mains')">
+    Mains
+</button>
+
+</div>
+
+
+<!-- PRELIMS -->
+
+<div id="prelims" class="tab-content active">
+
+<div class="paper-grid">
+
+<div class="paper">
+
+<div class="paper-title">
+
+<h3>Paper I — General Studies</h3>
+
+<span class="marks">200 Marks</span>
+
+</div>
+
+<p>
+General Studies + General Knowledge of Chhattisgarh.
+</p>
+
+<ul>
+<li>History of India & Indian National Movement</li>
+<li>Indian Geography</li>
+<li>Indian Economy</li>
+<li>Indian Constitution & Polity</li>
+<li>General Science & Technology</li>
+<li>Environment</li>
+<li>Indian Philosophy, Art, Literature & Culture</li>
+<li>Current Affairs & Sports</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+
+<h3>Chhattisgarh General Knowledge</h3>
+
+<span class="marks">Part of Paper I</span>
+
+</div>
+
+<ul>
+<li>History of Chhattisgarh</li>
+<li>Contribution to Freedom Movement</li>
+<li>Administrative Structure</li>
+<li>Local Government & Panchayati Raj</li>
+<li>Tribes & Special Traditions</li>
+<li>Festivals and Folk Culture</li>
+<li>Geography & Climate</li>
+<li>Census</li>
+<li>Archaeological & Tourist Centres</li>
+<li>Economy, Forest & Agriculture</li>
+<li>Literature, Music, Dance, Art & Culture</li>
+<li>Industry</li>
+<li>Energy, Water & Mineral Resources</li>
+<li>Chhattisgarh Current Affairs</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+
+<h3>Paper II — Aptitude Test</h3>
+
+<span class="marks">200 Marks</span>
+
+</div>
+
+<ul>
+<li>Interpersonal Skills & Communication</li>
+<li>Logical Reasoning</li>
+<li>Analytical Ability</li>
+<li>Decision Making</li>
+<li>Problem Solving</li>
+<li>General Mental Ability</li>
+<li>Basic Numerical Aptitude</li>
+<li>Data Interpretation</li>
+<li>Data Sufficiency</li>
+<li>Hindi Language</li>
+<li>Chhattisgarhi Language</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MAINS -->
+
+<div id="mains" class="tab-content">
+
+<div class="paper-grid">
+
+<div class="paper">
+
+<div class="paper-title">
+<h3>Paper I — Language</h3>
+<span class="marks">200</span>
+</div>
+
+<p>
+Hindi, English और Chhattisgarhi language skills पर आधारित।
+</p>
+
+<ul>
+<li>Language comprehension</li>
+<li>Grammar</li>
+<li>Vocabulary</li>
+<li>Precis / concise writing</li>
+<li>Sentence correction</li>
+<li>Official correspondence</li>
+<li>Letter writing</li>
+<li>Chhattisgarhi language components</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+<h3>Paper II — Essay</h3>
+<span class="marks">200</span>
+</div>
+
+<ul>
+<li>National issues</li>
+<li>International issues</li>
+<li>Chhattisgarh state issues</li>
+<li>Social issues</li>
+<li>Economic issues</li>
+<li>Governance-related themes</li>
+<li>Contemporary issues</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+<h3>Paper III — General Studies I</h3>
+<span class="marks">200</span>
+</div>
+
+<ul>
+<li>History</li>
+<li>Indian Constitution</li>
+<li>Public Administration</li>
+<li>Chhattisgarh History</li>
+<li>Governance-related themes</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+<h3>Paper IV — General Studies II</h3>
+<span class="marks">200</span>
+</div>
+
+<ul>
+<li>General Science</li>
+<li>Technology</li>
+<li>Applied Science</li>
+<li>Behavioural aspects</li>
+<li>Scientific developments</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+<h3>Paper V — General Studies III</h3>
+<span class="marks">200</span>
+</div>
+
+<ul>
+<li>Indian Economy</li>
+<li>Chhattisgarh Economy</li>
+<li>Indian Geography</li>
+<li>Chhattisgarh Geography</li>
+<li>Agriculture</li>
+<li>Resources and development</li>
+</ul>
+
+</div>
+
+
+<div class="paper">
+
+<div class="paper-title">
+  
