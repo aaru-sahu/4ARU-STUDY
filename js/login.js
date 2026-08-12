@@ -1,10 +1,62 @@
-/* Passwordless login client. The server must send and verify OTPs; this page never creates or stores OTPs. */
-(function(){
-  const apiBase=(window.AUTH_API_BASE||'/api/auth').replace(/\/$/,''); const emailStep=document.getElementById('email-step'); const otpStep=document.getElementById('otp-step'); const emailInput=document.getElementById('email'); const otpInput=document.getElementById('otp'); const status=document.getElementById('status'); const emailButton=document.getElementById('email-button'); const verifyButton=document.getElementById('verify-button'); const resendButton=document.getElementById('resend'); let email=''; let timer;
-  function message(text,error){status.textContent=text;status.classList.toggle('error',Boolean(error))} function busy(button,state){button.disabled=state;button.textContent=state?'Please wait…':button.dataset.label}
-  async function post(path,body){const cfg=window.SUPABASE_CONFIG;const endpoint=cfg?(path==='/request-otp'?cfg.url+'/auth/v1/otp':cfg.url+'/auth/v1/verify'):apiBase+path;const payload=path==='/verify-otp'?{email:body.email,token:body.otp,type:'email'}:body;let response;try{response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',...(cfg?{apikey:cfg.anonKey}: {})},credentials:'include',body:JSON.stringify(payload)})}catch(_){throw new Error('OTP service तक connection नहीं हो पाया। थोड़ी देर बाद फिर कोशिश करें।')}let data={};try{data=await response.json()}catch(_){}if(!response.ok)throw new Error(data.msg||data.message||'OTP request पूरी नहीं हो सकी। Please try again.');if(data.access_token)localStorage.setItem('sb-access-token',data.access_token);return data}
-  function countdown(){let seconds=30;resendButton.disabled=true;resendButton.textContent='Resend OTP in '+seconds+'s';clearInterval(timer);timer=setInterval(function(){seconds--;if(seconds<=0){clearInterval(timer);resendButton.disabled=false;resendButton.textContent='Resend OTP'}else resendButton.textContent='Resend OTP in '+seconds+'s'},1000)}
-  emailButton.addEventListener('click',async function(){if(!emailInput.checkValidity()){emailInput.reportValidity();return}email=emailInput.value.trim().toLowerCase();busy(emailButton,true);message('OTP भेजा जा रहा है…');try{await post('/request-otp',{email});emailStep.classList.add('hidden');otpStep.classList.remove('hidden');otpInput.focus();countdown();message('OTP आपके email पर भेज दिया गया है।')}catch(error){message(error.message,true)}finally{busy(emailButton,false)}});
-  verifyButton.addEventListener('click',async function(){if(!/^\d{6}$/.test(otpInput.value.trim())){message('6 digit OTP डालें।',true);return}busy(verifyButton,true);message('OTP verify हो रहा है…');try{const result=await post('/verify-otp',{email,otp:otpInput.value.trim()});message(result.redirect?'Email verified. Redirecting…':'Email verified successfully.');if(result.redirect)window.location.assign(result.redirect)}catch(error){message(error.message,true)}finally{busy(verifyButton,false)}});
-  resendButton.addEventListener('click',function(){emailButton.click()}); document.getElementById('change-email').addEventListener('click',function(){otpStep.classList.add('hidden');emailStep.classList.remove('hidden');message('');emailInput.focus()});
+/* Real passwordless Supabase login: email link returns a short-lived session token. */
+(function () {
+  const cfg = window.SUPABASE_CONFIG;
+  const emailInput = document.getElementById('email');
+  const sendButton = document.getElementById('email-button');
+  const status = document.getElementById('status');
+
+  function show(message, error) {
+    status.textContent = message;
+    status.classList.toggle('error', Boolean(error));
+  }
+
+  function setBusy(isBusy) {
+    sendButton.disabled = isBusy;
+    sendButton.textContent = isBusy ? 'Sending…' : 'Send secure login link';
+  }
+
+  function finishFromEmailLink() {
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const token = params.get('access_token');
+    if (!token) return;
+    localStorage.setItem('sb-access-token', token);
+    history.replaceState({}, document.title, window.location.pathname);
+    emailInput.closest('#email-step').classList.add('hidden');
+    show('Email verified. You are logged in. Open the CGPSC admin portal to add resources.');
+  }
+
+  async function sendLink() {
+    if (!cfg || !cfg.url || !cfg.anonKey) {
+      show('Supabase connection configuration is missing.', true);
+      return;
+    }
+    if (!emailInput.checkValidity()) {
+      emailInput.reportValidity();
+      return;
+    }
+    setBusy(true);
+    show('Secure login link भेजा जा रहा है…');
+    try {
+      const redirectTo = window.location.origin + window.location.pathname;
+      const response = await fetch(cfg.url + '/auth/v1/otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey },
+        body: JSON.stringify({
+          email: emailInput.value.trim().toLowerCase(),
+          create_user: true,
+          email_redirect_to: redirectTo
+        })
+      });
+      const data = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(data.msg || data.message || 'Email भेजा नहीं जा सका।');
+      show('Email भेज दिया गया। Inbox खोलकर “Sign in” link पर tap/click करें। फिर आप automatically logged in हो जाएंगे।');
+    } catch (error) {
+      show(error.message || 'Request failed. Please try again.', true);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  finishFromEmailLink();
+  sendButton.addEventListener('click', sendLink);
 })();
