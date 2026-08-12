@@ -10,6 +10,7 @@
   const adminEmail = '4k4sh07@gmail.com';
   function token() { return localStorage.getItem('sb-access-token'); }
   function signedInEmail() { try { const part = token().split('.')[1].replace(/-/g, '+').replace(/_/g, '/'); return JSON.parse(atob(part)).email || ''; } catch (_) { return ''; } }
+  function isAdmin() { return signedInEmail().toLowerCase() === adminEmail; }
   function headers() { return { apikey: cfg.anonKey, Authorization: 'Bearer ' + (token() || cfg.anonKey), 'Content-Type': 'application/json' }; }
   async function request(method, body, id) {
     const url = table + (id ? '?id=eq.' + encodeURIComponent(id) : '?select=*&order=created_at.desc');
@@ -33,11 +34,12 @@
   async function load() { try { const items = await request(); renderPublic(items); renderAdmin(items); } catch (_) { renderPublic([]); } }
   document.addEventListener('DOMContentLoaded', function () {
     load();
+    const adminLink = document.getElementById('resource-admin-link');
+    if (adminLink) adminLink.hidden = !isAdmin();
     const form = document.getElementById('resource-form'); if (!form) return;
-    const isAdmin = signedInEmail().toLowerCase() === adminEmail;
-    document.getElementById('login-required').classList.toggle('hidden', isAdmin);
-    document.getElementById('admin-content').classList.toggle('hidden', !isAdmin);
-    if (!isAdmin) document.querySelector('#login-required .admin-note').textContent = token() ? 'This account is not allowed to manage CGPSC resources.' : 'Resource add/delete karne ke liye admin email se secure login karo.';
+    if (!isAdmin()) { window.location.replace('cgpsc.html'); return; }
+    document.getElementById('login-required').classList.add('hidden');
+    document.getElementById('admin-content').classList.remove('hidden');
     form.addEventListener('submit', async function (event) { event.preventDefault(); const data = new FormData(form); try { await request('POST', { icon: String(data.get('icon') || '📘').trim(), title: String(data.get('title')).trim(), description: String(data.get('description')).trim(), url: String(data.get('url')).trim() }); form.reset(); showStatus('Resource live add ho gaya.'); await load(); } catch (error) { showStatus(error.message, true); } });
   });
 })();
