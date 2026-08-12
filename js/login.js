@@ -34,6 +34,12 @@
       emailInput.reportValidity();
       return;
     }
+    const lastRequest = Number(localStorage.getItem('4aru-login-last-request') || 0);
+    const secondsLeft = Math.ceil((60000 - (Date.now() - lastRequest)) / 1000);
+    if (secondsLeft > 0) {
+      show('Please wait ' + secondsLeft + ' seconds before requesting another login email.', true);
+      return;
+    }
     setBusy(true);
     show('Secure login link भेजा जा रहा है…');
     try {
@@ -48,7 +54,12 @@
         })
       });
       const data = await response.json().catch(function () { return {}; });
-      if (!response.ok) throw new Error(data.msg || data.message || 'Email भेजा नहीं जा सका।');
+      if (!response.ok) {
+        const details = data.msg || data.message || '';
+        if (/rate limit/i.test(details)) throw new Error('Supabase email limit reached. Please wait up to 1 hour before trying again. Do not click the button repeatedly.');
+        throw new Error(details || 'Email भेजा नहीं जा सका।');
+      }
+      localStorage.setItem('4aru-login-last-request', String(Date.now()));
       show('Email भेज दिया गया। Inbox खोलकर “Sign in” link पर tap/click करें। फिर आप automatically logged in हो जाएंगे।');
     } catch (error) {
       show(error.message || 'Request failed. Please try again.', true);
