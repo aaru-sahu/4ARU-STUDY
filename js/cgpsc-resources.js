@@ -34,8 +34,6 @@
   async function load() { try { const items = await request(); renderPublic(items); renderAdmin(items); } catch (_) { renderPublic([]); } }
   document.addEventListener('DOMContentLoaded', function () {
     load();
-    const adminLink = document.getElementById('resource-admin-link');
-    if (adminLink) adminLink.hidden = !isAdmin();
     const form = document.getElementById('resource-form'); if (!form) return;
     if (!isAdmin()) { window.location.replace('cgpsc.html'); return; }
     document.getElementById('login-required').classList.add('hidden');

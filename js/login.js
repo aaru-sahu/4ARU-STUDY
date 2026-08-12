@@ -22,7 +22,10 @@
     localStorage.setItem('sb-access-token', token);
     history.replaceState({}, document.title, window.location.pathname);
     emailInput.closest('#email-step').classList.add('hidden');
-    show('Email verified. You are logged in. Open the CGPSC admin portal to add resources.');
+    const encoded = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(atob(encoded + '='.repeat((4 - encoded.length % 4) % 4)));
+    if ((payload.email || '').toLowerCase() === '4k4sh07@gmail.com') document.getElementById('admin-portal-link').classList.remove('hidden');
+    show('Email verified. You are logged in.');
   }
 
   async function sendLink() {
