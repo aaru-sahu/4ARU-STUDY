@@ -1,0 +1,1 @@
+window.SUPABASE_CONFIG={url:'https://cgsitxzkawfkkrpciowb.supabase.co',anonKey:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnc2l0eHprYXdma2tycGNpb3diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1MzExNjksImV4cCI6MjEwMjEwNzE2OX0.DwTnTIg15QcYx-UZWG85JEKvBxgpx9YOpjeZhP7AlOU'};
