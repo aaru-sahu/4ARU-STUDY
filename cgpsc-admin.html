@@ -1,3 +1,19 @@
 <!doctype html>
-<html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CGPSC Resource Portal | 4ARU Study</title><link rel="stylesheet" href="css/resource-portal.css"></head>
-<body class="admin-page"><main class="admin-wrap"><div class="admin-top"><div><div class="admin-muted">4ARU STUDY · CGPSC</div><h1>Resource Portal</h1></div><a class="admin-back" href="cgpsc.html">← CGPSC page</a></div><p class="admin-muted">Resources अब Supabase database में save होंगे। Admin write access के लिए Supabase Auth login और RLS policy required है।</p><form id="resource-form" class="admin-form"><div><label for="icon">Icon</label><input id="icon" name="icon" value="📘" maxlength="4"></div><div><label for="title">Resource title</label><input id="title" name="title" placeholder="Prelims Previous Papers" required></div><div class="full"><label for="description">Short description</label><textarea id="description" name="description" placeholder="इस resource में क्या मिलेगा?" required></textarea></div><div class="full"><label for="url">Resource link</label><input id="url" name="url" type="url" placeholder="https://example.com/paper.pdf" required></div><div class="full"><button class="admin-submit" type="submit">Add resource</button><span id="admin-status" class="admin-status" role="status"></span></div></form><section class="admin-list"><h2>Saved resources</h2><div id="resource-list"><p class="admin-empty">Loading…</p></div><div class="admin-tools"><button id="export-resources" class="admin-tool" type="button">Export JSON</button><button id="reset-resources" class="admin-tool" type="button">Restore defaults</button></div></section><p class="admin-note">Security: anon key public है, लेकिन database writes केवल authenticated users के लिए RLS से allow करें।</p></main><script src="js/supabase-config.js"></script><script src="js/cgpsc-resources.js" defer></script></body></html>
+<html lang="hi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CGPSC Admin Portal | 4ARU Study</title><link rel="stylesheet" href="css/resource-portal.css"></head>
+<body class="admin-page"><main class="admin-wrap">
+  <div class="admin-top"><div><div class="admin-muted">4ARU STUDY · ADMIN</div><h1>CGPSC Resource Portal</h1></div><a class="admin-back" href="cgpsc.html">← CGPSC page</a></div>
+  <p class="admin-muted">Yahin se Previous Papers, Study Material, Current Affairs aur useful links add karo. Add kiya hua resource CGPSC page par sabko dikh jayega.</p>
+  <section id="login-required" class="admin-list hidden"><h2>Admin login required</h2><p class="admin-note">Resource add/delete karne se pehle apne admin email se secure login karo.</p><a class="admin-submit admin-login-link" href="login.html">Login first</a></section>
+  <section id="admin-content" class="hidden">
+    <form id="resource-form" class="admin-form">
+      <div><label for="icon">Icon</label><input id="icon" name="icon" value="📘" maxlength="4"></div>
+      <div><label for="title">Resource title</label><input id="title" name="title" placeholder="CGPSC Prelims 2024 Paper" required></div>
+      <div class="full"><label for="description">Short description</label><textarea id="description" name="description" placeholder="Is link mein kya milega?" required></textarea></div>
+      <div class="full"><label for="url">PDF / Drive / Website link</label><input id="url" name="url" type="url" placeholder="https://drive.google.com/..." required><p class="admin-note">Trusted HTTPS link hi paste karo.</p></div>
+      <div class="full"><button class="admin-submit" type="submit">Add resource</button><span id="admin-status" class="admin-status" role="status"></span></div>
+    </form>
+    <section class="admin-list"><h2>Added resources</h2><div id="resource-list"><p class="admin-empty">Loading…</p></div></section>
+  </section>
+  <section class="admin-list"><h2>How to use</h2><p class="admin-note">1. Login first → 2. Title, description aur link bharo → 3. Add resource dabao → 4. CGPSC page refresh karke public view dekho.</p></section>
+</main><script src="js/supabase-config.js"></script><script src="js/cgpsc-resources.js" defer></script></body></html>

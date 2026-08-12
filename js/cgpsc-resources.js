@@ -1,14 +1,40 @@
-(function(){
-  const key='4aru-cgpsc-resources-v1', cfg=window.SUPABASE_CONFIG||{}, table=cfg.url?cfg.url+'/rest/v1/cgpsc_resources':'';
-  const defaults=[{id:'syllabus',icon:'📚',title:'Syllabus',description:'CGPSC syllabus और topic-wise preparation structure देखें।',url:'#syllabus'},{id:'papers',icon:'📝',title:'Previous Papers',description:'Previous year question papers और analysis तक पहुँचें।',url:'#'},{id:'current-affairs',icon:'📰',title:'Current Affairs',description:'National और Chhattisgarh current affairs section।',url:'#'},{id:'material',icon:'📖',title:'Study Material',description:'Subject-wise notes और preparation material।',url:'#'}];
-  const headers=()=>({apikey:cfg.anonKey,Authorization:'Bearer '+(localStorage.getItem('sb-access-token')||cfg.anonKey),'Content-Type':'application/json'});
-  function local(){try{const x=JSON.parse(localStorage.getItem(key));return Array.isArray(x)?x:defaults}catch(_){return defaults}}
-  async function remote(method='',body,id=''){if(!table)throw Error('Supabase config missing');const r=await fetch(table+(id?('?id=eq.'+encodeURIComponent(id)):''),{method:method||'GET',headers:{...headers(),Prefer:method==='POST'?'return=representation':'return=minimal'},body:body?JSON.stringify(body):undefined});if(!r.ok){let d={};try{d=await r.json()}catch(_){}throw Error(d.message||'Supabase table/policy setup incomplete')}return method==='GET'?r.json():[]}
-  async function read(){try{const items=await remote('GET');return items.length?items:defaults}catch(_){return local()}}
-  function safeUrl(v){try{const u=new URL(v,location.href);return ['http:','https:'].includes(u.protocol)||v.startsWith('#')?u.href:'#'}catch(_){return '#'}}
-  function renderPublic(items){const grid=document.getElementById('cgpsc-resources');if(!grid)return;grid.innerHTML='';items.forEach(x=>{const a=document.createElement('a');a.className='resource';a.href=safeUrl(x.url);const h=document.createElement('h3');h.textContent=(x.icon||'📘')+' '+x.title;const p=document.createElement('p');p.textContent=x.description;a.append(h,p);grid.append(a)})}
-  function renderAdmin(items){const list=document.getElementById('resource-list');if(!list)return;list.innerHTML='';if(!items.length){list.innerHTML='<p class="admin-empty">अभी कोई resource नहीं है।</p>';return}items.forEach(x=>{const row=document.createElement('div');row.className='admin-item';const info=document.createElement('div');const h=document.createElement('h3');h.textContent=(x.icon||'📘')+' '+x.title;const p=document.createElement('p');p.textContent=x.description;info.append(h,p);const b=document.createElement('button');b.className='admin-delete';b.textContent='Delete';b.onclick=async()=>{try{await remote('DELETE',null,x.id);load()}catch(e){status(e.message,true)}};row.append(info,b);list.append(row)})}
-  function status(text,error){const el=document.getElementById('admin-status');if(el){el.textContent=text;el.style.color=error?'#ff9d9d':'#9cff45'}}
-  let current=[];async function load(){current=await read();renderPublic(current);renderAdmin(current)}
-  document.addEventListener('DOMContentLoaded',function(){load();const form=document.getElementById('resource-form');if(!form)return;form.onsubmit=async e=>{e.preventDefault();const d=new FormData(form);try{await remote('POST',{icon:d.get('icon')||'📘',title:String(d.get('title')).trim(),description:String(d.get('description')).trim(),url:String(d.get('url')).trim()});form.reset();status('Resource Supabase में save हो गया।');load()}catch(err){status(err.message,true)}};document.getElementById('export-resources').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(current,null,2)],{type:'application/json'}));a.download='cgpsc-resources.json';a.click()};document.getElementById('reset-resources').onclick=()=>{localStorage.setItem(key,JSON.stringify(defaults));load()}});
+(function () {
+  const cfg = window.SUPABASE_CONFIG || {};
+  const table = cfg.url ? cfg.url + '/rest/v1/cgpsc_resources' : '';
+  const defaults = [
+    { icon: '📚', title: 'Syllabus', description: 'CGPSC syllabus aur topic-wise preparation structure dekhen.', url: '#syllabus' },
+    { icon: '📝', title: 'Previous Papers', description: 'Previous year question papers aur unka analysis.', url: '#' },
+    { icon: '📰', title: 'Current Affairs', description: 'Important national aur Chhattisgarh current affairs.', url: '#' },
+    { icon: '📖', title: 'Study Material', description: 'Subject-wise notes aur preparation material.', url: '#' }
+  ];
+  function token() { return localStorage.getItem('sb-access-token'); }
+  function headers() { return { apikey: cfg.anonKey, Authorization: 'Bearer ' + (token() || cfg.anonKey), 'Content-Type': 'application/json' }; }
+  async function request(method, body, id) {
+    const url = table + (id ? '?id=eq.' + encodeURIComponent(id) : '?select=*&order=created_at.desc');
+    const response = await fetch(url, { method: method || 'GET', headers: { ...headers(), Prefer: method === 'POST' ? 'return=representation' : 'return=minimal' }, body: body ? JSON.stringify(body) : undefined });
+    const data = await response.json().catch(function () { return []; });
+    if (!response.ok) throw new Error(data.message || data.hint || 'Database request failed. Please login again.');
+    return data;
+  }
+  function safeUrl(value) { try { const url = new URL(value, location.href); return ['http:', 'https:'].includes(url.protocol) || value.startsWith('#') ? url.href : '#'; } catch (_) { return '#'; } }
+  function renderPublic(items) {
+    const grid = document.getElementById('cgpsc-resources'); if (!grid) return;
+    grid.innerHTML = '';
+    [...defaults, ...items].forEach(function (item) { const a = document.createElement('a'); a.className = 'resource'; a.href = safeUrl(item.url); const h = document.createElement('h3'); h.textContent = (item.icon || '📘') + ' ' + item.title; const p = document.createElement('p'); p.textContent = item.description; a.append(h, p); grid.append(a); });
+  }
+  function showStatus(text, error) { const box = document.getElementById('admin-status'); if (box) { box.textContent = text; box.style.color = error ? '#ff9d9d' : '#9cff45'; } }
+  function renderAdmin(items) {
+    const list = document.getElementById('resource-list'); if (!list) return;
+    list.innerHTML = items.length ? '' : '<p class="admin-empty">Abhi aapne koi extra resource add nahi kiya hai.</p>';
+    items.forEach(function (item) { const row = document.createElement('div'); row.className = 'admin-item'; const info = document.createElement('div'); const h = document.createElement('h3'); h.textContent = (item.icon || '📘') + ' ' + item.title; const p = document.createElement('p'); p.textContent = item.description; info.append(h, p); const del = document.createElement('button'); del.className = 'admin-delete'; del.type = 'button'; del.textContent = 'Delete'; del.onclick = async function () { try { await request('DELETE', null, item.id); await load(); } catch (error) { showStatus(error.message, true); } }; row.append(info, del); list.append(row); });
+  }
+  async function load() { try { const items = await request(); renderPublic(items); renderAdmin(items); } catch (_) { renderPublic([]); } }
+  document.addEventListener('DOMContentLoaded', function () {
+    load();
+    const form = document.getElementById('resource-form'); if (!form) return;
+    const loggedIn = Boolean(token());
+    document.getElementById('login-required').classList.toggle('hidden', loggedIn);
+    document.getElementById('admin-content').classList.toggle('hidden', !loggedIn);
+    form.addEventListener('submit', async function (event) { event.preventDefault(); const data = new FormData(form); try { await request('POST', { icon: String(data.get('icon') || '📘').trim(), title: String(data.get('title')).trim(), description: String(data.get('description')).trim(), url: String(data.get('url')).trim() }); form.reset(); showStatus('Resource live add ho gaya.'); await load(); } catch (error) { showStatus(error.message, true); } });
+  });
 })();
