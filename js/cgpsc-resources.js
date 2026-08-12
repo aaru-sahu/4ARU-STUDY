@@ -1,0 +1,17 @@
+(function(){
+  const key='4aru-cgpsc-resources-v1';
+  const defaults=[
+    {id:'syllabus',icon:'📚',title:'Syllabus',description:'CGPSC syllabus और topic-wise preparation structure देखें।',url:'#syllabus'},
+    {id:'papers',icon:'📝',title:'Previous Papers',description:'Previous year question papers और उनके analysis तक पहुँचें।',url:'#'},
+    {id:'current-affairs',icon:'📰',title:'Current Affairs',description:'Important national और Chhattisgarh current affairs के लिए section।',url:'#'},
+    {id:'material',icon:'📖',title:'Study Material',description:'Subject-wise notes और preparation material यहाँ उपलब्ध कराया जा सकता है।',url:'#'}
+  ];
+  function read(){try{const saved=JSON.parse(localStorage.getItem(key));return Array.isArray(saved)?saved:defaults}catch(_){return defaults}}
+  function save(items){localStorage.setItem(key,JSON.stringify(items));}
+  function safeUrl(value){try{const url=new URL(value,window.location.href);return ['http:','https:'].includes(url.protocol)||value.startsWith('#')?url.href:'#'}catch(_){return '#'}}
+  function renderPublic(){const grid=document.getElementById('cgpsc-resources');if(!grid)return;grid.innerHTML='';read().forEach(function(item){const link=document.createElement('a');link.className='resource';link.href=safeUrl(item.url);const h=document.createElement('h3');h.textContent=(item.icon||'📘')+' '+item.title;const p=document.createElement('p');p.textContent=item.description;link.append(h,p);grid.append(link)})}
+  function renderAdmin(){const list=document.getElementById('resource-list');if(!list)return;const items=read();list.innerHTML='';if(!items.length){list.innerHTML='<p class="admin-empty">अभी कोई resource नहीं है।</p>';return}items.forEach(function(item){const row=document.createElement('div');row.className='admin-item';const info=document.createElement('div');const title=document.createElement('h3');title.textContent=(item.icon||'📘')+' '+item.title;const desc=document.createElement('p');desc.textContent=item.description;info.append(title,desc);const del=document.createElement('button');del.className='admin-delete';del.type='button';del.textContent='Delete';del.addEventListener('click',function(){save(read().filter(x=>x.id!==item.id));renderAdmin();});row.append(info,del);list.append(row)})}
+  function download(){const blob=new Blob([JSON.stringify(read(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cgpsc-resources.json';a.click();URL.revokeObjectURL(a.href)}
+  renderPublic();renderAdmin();
+  const form=document.getElementById('resource-form');if(form){form.addEventListener('submit',function(event){event.preventDefault();const data=new FormData(form);const title=String(data.get('title')||'').trim();const description=String(data.get('description')||'').trim();if(!title||!description)return;const items=read();items.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),icon:String(data.get('icon')||'📘').trim(),title,description,url:String(data.get('url')||'#').trim()||'#'});save(items);form.reset();document.getElementById('admin-status').textContent='Resource browser mein save ho gaya.';renderAdmin()});document.getElementById('export-resources').addEventListener('click',download);document.getElementById('reset-resources').addEventListener('click',function(){if(confirm('Default resources restore करें?')){save(defaults);renderAdmin()}})}
+})();
