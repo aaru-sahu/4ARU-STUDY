@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>4ARU Resources | Exam Preparation</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#020b08;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+
+:root{
+    --green:#9cff45;
+    --green2:#42e695;
+    --dark:#020b08;
+    --card:#071914;
+    --border:rgba(126,255,75,.25);
+    --text:#f4fff7;
+    --muted:#a9b9b1;
+}
+
+.container{
+    width:92%;
+    max-width:1450px;
+    margin:auto;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    height:74px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 3%;
+    background:rgba(2,11,8,.92);
+    border-bottom:1px solid rgba(125,255,80,.12);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    backdrop-filter:blur(15px);
+}
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:var(--green);
+    line-height:.8;
+}
+
+.logo span{
+    display:block;
+    font-size:10px;
+    letter-spacing:5px;
+    color:#fff;
+    text-align:center;
+    margin-top:6px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:34px;
+}
+
+.nav-links a{
+    color:#eee;
+    text-decoration:none;
+    font-size:15px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--green);
+}
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-content{
+    position:absolute;
+    top:30px;
+    left:0;
+    width:190px;
+    background:#071611;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:10px;
+    display:none;
+    box-shadow:0 15px 50px rgba(0,0,0,.5);
+}
+
+.dropdown:hover .dropdown-content{
+    display:block;
+}
+
+.dropdown-content a{
+    display:block;
+    padding:12px;
+    border-radius:8px;
+}
+
+.dropdown-content a:hover{
+    background:rgba(150,255,70,.1);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.search{
+    width:245px;
+    height:40px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#07120f;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+}
+
+.search input{
+    background:none;
+    border:0;
+    outline:0;
+    color:#fff;
+    width:100%;
+    margin-left:8px;
+}
+
+.theme{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.12);
+    background:#07120f;
+    color:white;
+    cursor:pointer;
+}
+
+.login-btn{
+    border:1px solid var(--green);
+    background:transparent;
+    color:var(--green);
+    padding:11px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:var(--green);
+    color:#07120f;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:520px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 75% 50%,rgba(35,150,75,.18),transparent 35%),
+        radial-gradient(circle at 20% 30%,rgba(0,255,120,.08),transparent 30%),
+        #020b08;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    right:-250px;
+    top:-250px;
+    background:rgba(90,255,70,.06);
+    filter:blur(100px);
+    border-radius:50%;
+}
+
+.hero-content{
+    width:52%;
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    padding:9px 17px;
+    border:1px solid rgba(116,255,74,.5);
+    border-radius:30px;
+    color:#9cff67;
+    font-size:14px;
+    margin-bottom:24px;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.08;
+    margin-bottom:22px;
+}
+
+.hero h1 span{
+    color:var(--green);
+}
+
+.hero p{
+    max-width:650px;
+    font-size:18px;
+    line-height:1.7;
+    color:#b9c9c0;
+    margin-bottom:28px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.primary-btn,
+.secondary-btn{
+    padding:14px 25px;
+    border-radius:10px;
+    font-size:15px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.primary-btn{
+    background:var(--green);
+    color:#061008;
+    border:1px solid var(--green);
+    font-weight:bold;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(156,255,69,.25);
+}
+
+.secondary-btn{
+    background:transparent;
+    color:#baff91;
+    border:1px solid rgba(156,255,69,.35);
+}
+
+.secondary-btn:hover{
+    background:rgba(156,255,69,.08);
+}
+
+/* HERO VISUAL */
+
+.hero-visual{
+    position:absolute;
+    right:3%;
+    width:47%;
+    height:430px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.study-desk{
+    width:560px;
+    height:320px;
+    position:relative;
+    background:
+        radial-gradient(circle at 50% 45%,rgba(86,255,90,.15),transparent 40%),
+        linear-gradient(145deg,#0b251b,#020907);
+    border:1px solid rgba(120,255,80,.18);
+    border-radius:25px;
+    box-shadow:0 0 80px rgba(60,255,80,.08);
+}
+
+.books{
+    position:absolute;
+    left:25px;
+    bottom:35px;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.book{
+    width:230px;
+    height:42px;
+    border-radius:5px;
+    border:1px solid rgba(180,255,100,.2);
+    background:linear-gradient(90deg,#142b1d,#07140f);
+    color:#d5ad3d;
+    display:flex;
+    align-items:center;
+    padding-left:20px;
+    font-size:13px;
+    box-shadow:0 5px 15px rgba(0,0,0,.5);
+}
+
+.tablet{
+    position:absolute;
+    right:35px;
+    bottom:28px;
+    width:270px;
+    height:190px;
+    background:#030806;
+    border:1px solid rgba(126,255,90,.4);
+    border-radius:15px;
+    transform:rotate(-3deg);
+    box-shadow:0 0 35px rgba(90,255,80,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.tablet-logo{
+    text-align:center;
+    color:var(--green);
+    font-size:34px;
+    font-weight:bold;
+}
+
+.tablet-logo small{
+    display:block;
+    color:white;
+    font-size:9px;
+    letter-spacing:5px;
+}
+
+/* =========================
+   TRUST STRIP
+========================= */
+
+.trust{
+    display:flex;
+    gap:45px;
+    margin-top:25px;
+    color:#c7d4ce;
+}
+
+.trust-item{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    font-size:13px;
+}
+
+.trust-icon{
+    color:var(--green);
+    font-size:20px;
+}
+
+/* =========================
+   EXAM CARDS
+========================= */
+
+.exam-section{
+    padding:55px 0 30px;
+}
+
+.section-title{
+    font-size:25px;
+    margin-bottom:22px;
+}
+
+.exam-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+}
+
+.exam-card{
+    min-height:260px;
+    padding:25px 18px;
+    border-radius:17px;
+    border:1px solid var(--border);
+    background:
+        linear-gradient(145deg,rgba(14,35,25,.85),rgba(4,15,11,.95));
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.exam-card::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    background:rgba(100,255,80,.08);
+    filter:blur(45px);
+    top:-50px;
+    right:-50px;
+}
+
+.exam-card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(150,255,80,.55);
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
+.exam-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:50%;
+    border:1px solid rgba(150,255,80,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    color:var(--green);
+    background:rgba(100,255,70,.05);
+}
+
+.exam-card h3{
+    font-size:22px;
+    margin-top:12px;
+}
+
+.exam-card p{
+    color:#a9b7b0;
+    font-size:13px;
+    line-height:1.5;
+    margin:8px 0;
+}
+
+.explore{
+    display:block;
+    padding:11px;
+    border:1px solid rgba(150,255,80,.4);
+    border-radius:9px;
+    color:var(--green);
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+.explore:hover{
+    background:rgba(150,255,80,.1);
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+    margin:10px 0 30px;
+    padding:22px 15px;
+    border:1px solid rgba(100,255,100,.15);
+    border-radius:15px;
+    background:rgba(5,20,14,.7);
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.feature{
+    padding:0 22px;
+    border-right:1px solid rgba(255,255,255,.1);
+}
+
+.feature:last-child{
+    border:0;
+}
+
+.feature-icon{
+    width:45px;
+    height:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:rgba(130,255,80,.08);
+    color:var(--green);
+    margin-bottom:10px;
+}
+
+.feature h4{
+    margin-bottom:7px;
+}
+
+.feature p{
+    color:#94a59d;
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    margin:15px 0 40px;
+    min-height:110px;
+    border:1px solid rgba(120,255,80,.35);
+    border-radius:18px;
+    background:
+        radial-gradient(circle at 20% 50%,rgba(80,255,80,.12),transparent 30%),
+        linear-gradient(90deg,#092719,#0b351e);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:25px 45px;
+}
+
+.cta h2{
+    font-size:25px;
+}
+
+.cta h2 span{
+    color:var(--green);
+}
+
+.cta p{
+    color:#a9b9b1;
+    margin-top:7px;
+}
+
+.cta button{
+    padding:14px 28px;
+    background:var(--green);
+    border:0;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid rgba(100,255,80,.12);
+    border-radius:15px;
+    margin-bottom:40px;
+}
+
+.stat{
+    text-align:center;
+    padding:22px;
+    border-right:1px solid rgba(255,255,255,.08);
+}
+
+.stat:last-child{
+    border:0;
+}
+
+.stat h2{
+    color:var(--green);
+}
+
+.stat p{
+    color:#8fa099;
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:30px 5%;
+    text-align:center;
+    color:#718078;
+    font-size:13px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .search{
+        display:none;
+    }
+
+    .hero{
+        min-height:auto;
+        padding:70px 0 30px;
+    }
+
+    .hero-content{
+        width:100%;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero-visual{
+        display:none;
+    }
+
+    .exam-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .features{
+        grid-template-columns:repeat(2,1fr);
+        gap:20px;
+    }
+
+    .feature{
+        border:0;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cta{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:0 5%;
+    }
+
+    .logo{
+        font-size:25px;
+    }
+
+    .login-btn{
+        padding:9px 12px;
+        font-size:12px;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+    }
+
+    .trust{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .exam-grid{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .stat{
+        border-right:0;
+        border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .cta{
+        padding:25px;
+    }
+
+    .cta h2{
+        font-size:21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        4ARU
+        <span>RESOURCES</span>
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="#">Home</a>
+
+        <div class="dropdown">
+            <a href="#">Resources ▾</a>
+            <div class="dropdown-content">
+                <a href="#exams">CGPSC</a>
+                <a href="#exams">UPSC</a>
+                <a href="#exams">SSC</a>
+                <a href="#exams">CG VYAPAM</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#">Study Material ▾</a>
+            <div class="dropdown-content">
+                <a href="#">Notes</a>
+                <a href="#">PDFs</a>
+                <a href="#">Books</a>
+                <a href="#">Previous Year Papers</a>
+            </div>
+        </div>
+
+        <a href="#">Current Affairs</a>
+
+        <div class="dropdown">
+            <a href="#">More ▾</a>
+            <div class="dropdown-content">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Help</a>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="nav-right">
+
+        <div class="search">
+            🔍
+            <input type="text" placeholder="Search resources...">
+        </div>
+
+        <button class="theme" onclick="toggleTheme()">☼</button>
+
+        <button class="login-btn">
+            ♙ Login / Sign Up
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ★ Your Journey. Our Resources. Your Success.
+            </div>
+
+            <h1>
+                One Platform.<br>
+                <span>Unlimited Opportunities.</span>
+            </h1>
+
+            <p>
+                Best-in-class study material, notes, current affairs and more —
+                all in one place for CGPSC, UPSC, SSC and CG VYAPAM aspirants.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="primary-btn">
+                    Explore Resources →
+                </button>
+
+                <button class="secondary-btn">
+                    📖 Browse Study Material
+                </button>
+
+            </div>
+
+            <div class="trust">
+
+                <div class="trust-item">
+                    <span class="trust-icon">◉</span>
+                    Quality Content
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-icon">♙</span>
+                    Trusted Resources
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-icon">↻</span>
+                    Regular Updates
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT HERO VISUAL -->
+
+        <div class="hero-visual">
+
+            <div class="study-desk">
+
+                <div class="books">
+
+                    <div class="book">
+                        STUDY MATERIAL
+                    </div>
+
+                    <div class="book">
+                        CURRENT AFFAIRS
+                    </div>
+
+                    <div class="book">
+                        PREVIOUS YEAR PAPERS
+                    </div>
+
+                    <div class="book">
+                        NOTES & PDFs
+                    </div>
+
+                </div>
+
+                <div class="tablet">
+
+                    <div class="tablet-logo">
+                        4ARU
+                        <small>RESOURCES</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     EXAM SECTION
+========================= -->
+
+<section class="exam-section container" id="exams">
+
+    <h2 class="section-title">
+        Popular Resources
+    </h2>
+
+    <div class="exam-grid">
+
+        <!-- CGPSC -->
+
+        <div class="exam-card">
+
+            <div>
+
+                <div class="exam-icon">
+                    🏛
+                </div>
+
+                <h3>CGPSC</h3>
+
+                <p>
+                    Chhattisgarh Public Service Commission
+                </p>
+
+            </div>
+
+            <a href="#" class="explore">
+                Explore →
+            </a>
+
+        </div>
+
+
+        <!-- UPSC -->
+
+        <div class="exam-card">
+
+            <div>
+
+                <div class="exam-icon">
+                    🏛
+                </div>
+
+                <h3>UPSC</h3>
+
+                <p>
+                    Union Public Service Commission
+                </p>
+
+            </div>
+
+            <a href="#" class="explore">
+                Explore →
+            </a>
+
+        </div>
+
+
+        <!-- SSC -->
+
+        <div class="exam-card">
+
+            <div>
+
+                <div class="exam-icon">
+                    SSC
+                </div>
+
+                <h3>SSC</h3>
+
+                <p>
+                    Staff Selection Commission
+                </p>
+
+            </div>
+
+            <a href="#" class="explore">
+                Explore →
+            </a>
+
+        </div>
+
+
+        <!-- CG VYAPAM -->
+
+        <div class="exam-card">
+
+            <div>
+
+                <div class="exam-icon">
+                    CG
+                </div>
+
+                <h3>CG VYAPAM</h3>
+
+                <p>
+                    Chhattisgarh Professional Examination Board
+                </p>
+
+            </div>
+
+            <a href="#" class="explore">
+                Explore →
+            </a>
+
+        </div>
+
+
+        <!-- ALL RESOURCES -->
+
+        <div class="exam-card">
+
+            <div>
+
+                <div class="exam-icon">
+                    📁
+                </div>
+
+                <h3>All Resources</h3>
+
+                <p>
+                    Notes, PDFs, eBooks, Video Lectures & More
+                </p>
+
+            </div>
+
+            <a href="#" class="explore">
+                Explore →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section class="features container">
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            📚
+        </div>
+
+        <h4>Study Material</h4>
+
+        <p>
+            Syllabus based notes, eBooks and practice sets.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            📄
+        </div>
+
+        <h4>Previous Year Papers</h4>
+
+        <p>
+            Download and practice previous year papers.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ▶
+        </div>
+
+        <h4>Video Lectures</h4>
+
+        <p>
+            Concept clarity with expert video lectures.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            📰
+        </div>
+
+        <h4>Current Affairs</h4>
+
+        <p>
+            Stay updated with important daily current affairs.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ☆
+        </div>
+
+        <h4>Saved Resources</h4>
+
+        <p>
+            Save important content for quick access.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta container">
+
+    <div>
+
+        <h2>
+            Stay Consistent. Stay Focused.
+            <span>Success is Yours!</span>
+        </h2>
+
+        <p>
+            Kickstart your preparation today with the right resources.
+        </p>
+
+    </div>
+
+    <button>
+        Get Started Now →
+    </button>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="stats container">
+
+    <div class="stat">
+
+        <h2>10K+</h2>
+
+        <p>
+            Aspirants Trust Us
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>50K+</h2>
+
+        <p>
+            Study Materials
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>1L+</h2>
+
+        <p>
+            Resources Downloaded
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>Daily</h2>
