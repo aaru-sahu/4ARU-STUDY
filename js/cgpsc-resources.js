@@ -36,7 +36,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     load();
     const form = document.getElementById('resource-form'); if (!form) return;
-    if (!isAdmin()) { document.getElementById('access-denied').classList.remove('hidden'); return; }
+    if (!isAdmin()) {
+      // The dashboard is private: send visitors to the real authentication page
+      // instead of leaving an unauthorised dashboard shell on screen.
+      location.replace('login.html');
+      return;
+    }
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('admin-email').textContent = signedInEmail();
     const modal = document.getElementById('resource-modal');
